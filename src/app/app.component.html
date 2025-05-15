@@ -1,0 +1,69 @@
+<div class="container">
+  <h2>User Profile Form</h2>
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <!-- Personal Details -->
+    <div class="form-group">
+      <h3>Personal Details</h3>
+      <label for="firstName">First Name:</label>
+      <input id="firstName" formControlName="firstName" type="text" placeholder="Enter first name">
+      <div *ngIf="profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched" class="error">
+        First name is required.
+      </div>
+
+      <label for="lastName">Last Name:</label>
+      <input id="lastName" formControlName="lastName" type="text" placeholder="Enter last name">
+      <div *ngIf="profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched" class="error">
+        Last name is required.
+      </div>
+
+      <label for="email">Email:</label>
+      <input id="email" formControlName="email" type="email" placeholder="Enter email">
+      <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched" class="error">
+        Please enter a valid email address.
+      </div>
+    </div>
+
+    <!-- Address (Nested FormGroup) -->
+    <div formGroupName="address" class="form-group">
+      <h3>Address</h3>
+      <label for="street">Street:</label>
+      <input id="street" formControlName="street" type="text" placeholder="Enter street">
+      <div *ngIf="profileForm.get('address.street')?.invalid && profileForm.get('address.street')?.touched" class="error">
+        Street is required.
+      </div>
+
+      <label for="city">City:</label>
+      <input id="city" formControlName="city" type="text" placeholder="Enter city">
+      <div *ngIf="profileForm.get('address.city')?.invalid && profileForm.get('address.city')?.touched" class="error">
+        City is required.
+      </div>
+
+      <label for="zipCode">Zip Code:</label>
+      <input id="zipCode" formControlName="zipCode" type="text" placeholder="Enter zip code">
+      <div *ngIf="profileForm.get('address.zipCode')?.invalid && profileForm.get('address.zipCode')?.touched" class="error">
+        Zip code is required.
+      </div>
+    </div>
+
+    <!-- Preferences -->
+    <div class="form-group">
+      <h3>Preferences</h3>
+      <label>
+        <input type="checkbox" formControlName="subscribe"> Subscribe to newsletter
+      </label>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button type="submit" [disabled]="profileForm.invalid">Submit</button>
+      <button type="button" (click)="setFormValues()">Set Default Values</button>
+      <button type="button" (click)="patchFormValues()">Patch Values</button>
+    </div>
+  </form>
+
+  <!-- Display Submitted Data -->
+  <div *ngIf="submittedData" class="submitted-data">
+    <h3>Submitted Data:</h3>
+    <pre>{{ submittedData | json }}</pre>
+  </div>
+</div>
